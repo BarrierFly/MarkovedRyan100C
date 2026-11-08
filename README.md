@@ -1,13 +1,13 @@
 # MarkovedRyan100C
 To gennerate rubbish sentences.
 ## Rubbish Of The Day
-- 你迟早要死了
-- d
-- 有您有正很多内容
-- tunt.2 ut Fom 到另一张 wends s 贴图片
-- 这次看什么诡异
-- utf
-- 6
-- 什么玩意
-- d
-- 我司具有，电脑了怀念（？
+- 哎你好
+- 对话能力并有逻辑啊
+- 耐久 o 到这么折磨看
+- 我这次看它遭遇了
+- qis
+- 对啊
+- Yorere ble换了
+- 他表达了
+- 你
+- ❌️
