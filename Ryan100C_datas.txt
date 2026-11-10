@@ -44,7 +44,6 @@
 有后端了
 qoute换网址了
 这次是真的
-❌️
 开眼了
 第一次看到这种东西
 像伪人
@@ -61,12 +60,10 @@ dì qiú
 看懂了
 this is crazy
 妹妹永远可以找到诡异的小众动画片
-wtf
 damm this is so cursed
 damm this is crazy
 666这小乌龟会说中文
 可以模拟恐怖了
-😯
 不关服不会吧
 我记得可以的
 你群的人都着魔了
@@ -77,12 +74,10 @@ unbreakable
 谁来答
 双向中继器
 这是不会画画
-❌
 一个是压了的啊
 欸QQ群没法ban人啊
 You were banned form reality
 我现在帮你
-要吗
 生电区传来噩耗，电脑性能是有限的！
 为什么我的可乐是无糖的，生电区传来噩耗，，
 我祖父是宇宙基督教徒，生电区传来噩耗，，
@@ -91,7 +86,6 @@ You were banned form reality
 RNG是RandomNumberGenerator
 你确定那玩意叫RNG炼金
 一天睡48h 还是太超前了
-6
 你迟早要死
 已严肃转发
 2035年，根据研究发现，中国人晚上可以不睡家，睡觉超过1小时反而会增加死亡风险
@@ -101,22 +95,17 @@ RNG是RandomNumberGenerator
 马尔可夫链生成汉文
 反正很
 失败了
-6
 我最近没空，我会再搁一会
 你是想做嘛
 你做嘛
 好怀念（
 看我妹现在在看什么
-？
 你好
 我们结束绘画
 你可以暂停你的大脑了
 你看他
-什么
 看它像
-orz
 你仔细看
-不是
 分明是 orz
 对不起
 他死的好惨
@@ -129,17 +118,59 @@ E - Invalid
 看不懂是您的问题。
 您被暂停了您的权力，如果您认为这是一个错误，请证明您有权拥有您的合法权利。
 你将被暂停。
-❌️✋️
 正在播放：Delta Force-Making legends
 按回去
 你信不信你比我大
 还“孩子们”
-好看
-6
 他表达了怀疑你植入后门和他不想提供ip地址
 他在感到不满
 有逻辑啊
 这不是驴头和马嘴了
-（？）
 请你不要用马尔科夫链生成汉语
 什么玩意
+看了好几遍了
+“tileTickLimit 125时，观测到对脸侦测器完全停止闪烁。与预期的128不符”里128指的是什么
+一个world里的计划刻的确是分区块管理的我记得
+叫ChunkTickScheduler
+但具体的执行细节记不清楚了
+就是计划刻*有可能*是一个区块一个区块执行的
+我要再去看看
+哦似乎不是
+执行的时候会通过tickableChunkTickSchedulers重新存到一个新列表
+存到tickableTicks里
+一个ServerWorld在Tick时会tick自己的WorldTickScheduler<Block>和WorldTickScheduler<Fluid>
+WorldTickScheduler的Tick里会先collectTickableTicks（收集）再 tick（执行）
+其中，maxTicks（最大计划刻数）
+会被传入collectTickableTicks()
+在collectTickableTicks里，先收集所有 带有 <当前tick可执行计划刻> 的ChunkTickSchedulers
+然后addTickableTicks（添加当前tick可执行计划刻到一个新列表），maxTicks（最大计划刻数）会被传入其中
+而在这个过程中，先从this.tickableChunkTickSchedulers里取出来一个ChunkTickScheduler<T> chunkTickScheduler
+随后会判断this.isTickableTicksCountUnder(maxTicks)（计划刻上限是否满了）
+之后再进行具体的添加逻辑
+也就是说
+当前游戏刻可以执行的计划刻的确是按照区块添加的
+这因该可以解释为什么跨越区块的计划刻阻塞不能达到理想效果
+不同区块内的计划刻在被加入执行列表时也是有顺序的
+如果上限被设为128
+当前区块里有125个中继器和2个侦测器
+另外一个区块里还有3个中继器（同属于阻塞装置）
+那么实际上会先添加本区块的125个中继器和2个侦测器
+而另一个区块的中继器反而会被延后
+如果我的总结有问题欢迎指正...[委屈]
+我不能保证我百分百正确
+这解释的通
+那得看WorldTickScheduler<T> 从表里抽出 ChunkTickScheduler<T>的顺序
+和计划刻添加的顺序没有关系
+计划刻(OrderedTick)的执行顺序是自己存储的
+是一个long
+叫SubTickOrder(yarn的mapping里)
+计划刻的 "类型" "添加顺序" "执行时间" "优先级" 都是"计划刻"实例本身存储的
+落沙的shouldDupe不看门
+只看维度
+明年2月30号估计就可以用了
+2月30号
+2月30号什么都有
+因为WorldTickScheduler<T> 先从表里抽出了上面2个区块？
+那有问题
+这里面一定有问题
+补豪
