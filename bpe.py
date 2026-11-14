@@ -10,12 +10,34 @@ class BPETokenizer:
     def _get_pairs(self, word):
         return zip(word[:-1], word[1:])
 
+    def pre_tokenize(self, text):
+        # 半角字符连成一体，仅在“前一个字符是空格、当前字符是英文字母”处断开；
+        # 非 ASCII 字符（汉字、全角标点等）仍各自独立，其余一律不切。
+        # 该步骤先于 BPE 合并，返回值即 BPE 的初始单元序列。
+        units = []
+        buf = []
+        for i, ch in enumerate(text):
+            if not ch.isascii():
+                if buf:
+                    units.append(''.join(buf))
+                    buf = []
+                units.append(ch)
+                continue
+            if ch.isalpha() and i > 0 and text[i - 1] == ' ':
+                if buf:
+                    units.append(''.join(buf))
+                    buf = []
+            buf.append(ch)
+        if buf:
+            units.append(''.join(buf))
+        return units
+
     def train(self, texts):
         words = []
         for text in texts:
             text = text.replace('\n', '')
             if text:
-                words.append(list(text))
+                words.append(self.pre_tokenize(text))
         for w in words:
             self.vocab.update(w)
 
@@ -46,7 +68,7 @@ class BPETokenizer:
 
     def encode(self, text):
         text = text.replace('\n', '')
-        word = list(text)
+        word = self.pre_tokenize(text)
         for a, b, merged in self.merges:
             word = self._apply_merge(word, a, b, merged)
         return word
